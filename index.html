@@ -6,17 +6,18 @@
     <title>For Maple</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --bg-color: #050505;
             --envelope-color: #1a1a1a; /* Obsidian Black/Grey */
             --envelope-flap: #232323;
-            --paper-color: #f3f0e8;
+            --paper-white: #ffffff;
             --accent-gold: #c5a059;
-            --wax-red: #8a1c1c;
-            --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+            --wax-red: #9e0e0e;
+            --border-red: #8a1c1c;
+            --shadow-soft: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
         * { box-sizing: border-box; }
@@ -25,7 +26,6 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            background-color: var(--bg-color);
             background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
             display: flex;
             justify-content: center;
@@ -44,7 +44,7 @@
             height: 100vh;
             pointer-events: none;
             z-index: 50;
-            opacity: 0.05;
+            opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
@@ -94,17 +94,19 @@
         #enter-btn:hover {
             background: rgba(197, 160, 89, 0.1);
             border-color: var(--accent-gold);
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
         }
 
         /* --- THE ENVELOPE --- */
         .scene {
             position: relative;
-            display: none; /* Hidden until intro done */
+            display: none;
             width: 350px;
             height: 240px;
             opacity: 0;
             transition: opacity 1s ease;
+            /* Pushed down slightly to accommodate opened letter */
+            top: 50px; 
         }
 
         .envelope-container {
@@ -117,7 +119,7 @@
         }
 
         .envelope-container:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-5px) rotateX(5deg);
         }
 
         /* Back of Envelope */
@@ -127,30 +129,37 @@
             width: 100%;
             height: 100%;
             background: var(--envelope-color);
-            border-radius: 6px;
+            border-radius: 4px;
             box-shadow: var(--shadow-soft);
             z-index: 1;
-            /* Subtle leather texture look */
-            background-image: linear-gradient(to bottom right, #2a2a2a, #1a1a1a);
+            background-image: linear-gradient(to bottom right, #2a2a2a, #151515);
         }
 
-        /* The Paper Letter */
+        /* --- THE PAPER LETTER (UPDATED DESIGN) --- */
         .letter {
             position: absolute;
-            bottom: 0;
-            left: 5%;
-            width: 90%;
-            height: 95%;
-            background: var(--paper-color);
+            bottom: 5px; /* Tucked slightly further down initially */
+            left: 2.5%;
+            width: 95%;
+            height: 98%;
+            background: var(--paper-white);
             z-index: 2;
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 4px;
-            padding: 30px 25px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            overflow: hidden; /* Hide text initially */
-            
-            /* Paper Grain */
-            background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23000000' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), height 1.2s ease;
+            border-radius: 2px;
+            padding: 30px 0px; /* Remove side padding here, handle in content */
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+
+            /* COMPLEX BACKGROUND: Grain + Red Borders + Subtle Pattern */
+            background-image: 
+                /* Layer 1: Subtle Grain */
+                url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23000000' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E"),
+                /* Layer 2: Red Side Borders */
+                linear-gradient(to right, var(--border-red) 0%, var(--border-red) 25px, transparent 25px, transparent calc(100% - 25px), var(--border-red) calc(100% - 25px), var(--border-red) 100%),
+                /* Layer 3: Subtle Christmas Pattern in the white area */
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239e0e0e' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-color: #fffdf9; /* Slightly warm white base */
+            border-top: 1px solid #eee;
         }
 
         /* Front Flaps (Pocket) */
@@ -162,11 +171,11 @@
             height: 100%;
             z-index: 3;
             overflow: hidden;
-            border-radius: 6px;
+            border-radius: 4px;
             pointer-events: none;
         }
         
-        .envelope-pocket::before { /* Left triangle */
+        .envelope-pocket::before {
             content: "";
             position: absolute;
             bottom: 0;
@@ -175,10 +184,10 @@
             height: 0;
             border-style: solid;
             border-width: 140px 0 100px 350px;
-            border-color: transparent transparent transparent #222;
+            border-color: transparent transparent transparent #1a1a1a;
         }
         
-        .envelope-pocket::after { /* Right triangle */
+        .envelope-pocket::after {
             content: "";
             position: absolute;
             bottom: 0;
@@ -187,8 +196,8 @@
             height: 0;
             border-style: solid;
             border-width: 0 0 240px 350px;
-            border-color: transparent transparent #1f1f1f transparent;
-            box-shadow: -5px -5px 10px rgba(0,0,0,0.2);
+            border-color: transparent transparent #171717 transparent;
+            box-shadow: -5px -5px 15px rgba(0,0,0,0.3);
         }
 
         /* Top Flap */
@@ -204,25 +213,25 @@
             z-index: 4;
             transform-origin: top;
             transition: transform 0.8s ease-in-out, z-index 0.8s;
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
         }
 
         /* Wax Seal */
         .wax-seal {
             position: absolute;
-            bottom: -25px; /* Positioned relative to the top flap's visual triangle */
+            bottom: -25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             background: var(--wax-red);
             border-radius: 50%;
-            z-index: 10; /* Above everything */
-            box-shadow: 0 3px 6px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.2);
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 2px 3px rgba(255,255,255,0.2);
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 2px solid #5e1111;
+            border: 3px solid #7a0b0b;
             cursor: pointer;
             transition: transform 0.3s;
         }
@@ -230,10 +239,10 @@
         .wax-seal::after {
             content: "M";
             font-family: 'Cinzel', serif;
-            color: #d4af37;
+            color: var(--accent-gold);
             font-weight: bold;
-            font-size: 22px;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+            font-size: 24px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
         }
 
         .wax-seal:hover {
@@ -243,31 +252,39 @@
         /* --- OPEN ANIMATION STATES --- */
         .is-open .envelope-flap {
             transform: rotateX(180deg);
-            z-index: 1; /* Moves behind the letter */
-            transition-delay: 0s;
+            z-index: 1;
         }
 
         .is-open .wax-seal {
             opacity: 0;
-            transform: translateX(-50%) scale(0);
-            transition: all 0.4s ease;
+            transform: translateX(-50%) scale(0.5);
+            pointer-events: none;
         }
 
+        /* UPDATED: Lowered Position */
         .is-open .letter {
-            transform: translateY(-200px); /* Slides UP */
-            height: 450px; /* Expands */
-            z-index: 5; /* Moves in front of pocket */
-            transition-delay: 0.5s; /* Wait for flap to open */
+            /* Changed from -200px to -140px to keep it lower on screen */
+            transform: translateY(-140px); 
+            height: 420px; /* Slightly shorter total height */
+            z-index: 5;
+            transition-delay: 0.5s;
             overflow-y: auto;
         }
 
         /* --- LETTER CONTENT --- */
+        .letter-content-wrapper {
+             /* Added wrapper to handle padding inside the borders */
+            padding: 0 40px;
+            height: 100%;
+        }
+
         .letter-content {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1s ease 1.5s, transform 1s ease 1.5s;
-            color: #2c2c2c;
+            color: #1a1a1a;
             text-align: left;
+            height: 100%;
         }
         
         .is-open .letter-content {
@@ -277,41 +294,29 @@
 
         h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
-            color: #8a1c1c;
-            margin-top: 0;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: var(--border-red);
+            margin-top: 10px;
+            margin-bottom: 25px;
             text-align: center;
+            font-weight: normal;
         }
 
         p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .highlight {
-            color: #8a1c1c;
-            font-weight: 600;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #2a2a2a;
+            font-weight: 500;
         }
 
         .signature {
-            margin-top: 40px;
+            margin-top: 50px;
             text-align: right;
             font-family: 'Great Vibes', cursive;
-            font-size: 1.8rem;
-            color: #333;
-        }
-
-        .date {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            font-family: 'Cinzel', serif;
-            font-size: 0.7rem;
-            color: #888;
-            border-bottom: 1px solid #ccc;
+            font-size: 2rem;
+            color: var(--border-red);
+            padding-right: 10px;
         }
 
         /* Snow Particles */
@@ -322,6 +327,7 @@
             border-radius: 50%;
             opacity: 0.8;
             animation: fall linear infinite;
+            pointer-events: none;
         }
 
         @keyframes fall {
@@ -330,8 +336,8 @@
 
         @keyframes fadeInOut {
             0% { opacity: 0; transform: translateY(10px); }
-            30% { opacity: 1; transform: translateY(0); }
-            70% { opacity: 1; transform: translateY(0); }
+            40% { opacity: 1; transform: translateY(0); }
+            60% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(-10px); }
         }
 
@@ -339,12 +345,16 @@
             to { opacity: 1; }
         }
         
-        /* Custom Scrollbar */
+        /* Custom Scrollbar for the letter */
         .letter::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
+        }
+        .letter::-webkit-scrollbar-track {
+             background: transparent;
+             margin: 20px 0;
         }
         .letter::-webkit-scrollbar-thumb {
-            background-color: #d4af37;
+            background-color: var(--border-red);
             border-radius: 10px;
         }
     </style>
@@ -363,24 +373,22 @@
             <div class="envelope-body"></div>
             
             <div class="letter">
-                <div class="date">DEC 25, 2025</div>
-                <div class="letter-content">
-                    <h2>Dearest Maple,</h2>
-                    <p>
-                        The world is quiet tonight, and in this silence, my thoughts travel to you.
-                    </p>
-                    <p>
-                        Christmas is often about the noise, the lights, and the rush. But for me, it is a moment to pause and appreciate the rare and beautiful things in my life. You are, without a doubt, at the top of that list.
-                    </p>
-                    <p>
-                        Thank you for your warmth, your spirit, and for simply being who you are. May this season bring you the peace you deserve and a happiness that lasts well into the new year.
-                    </p>
-                    <p>
-                        You are cherished.
-                    </p>
-                    <div class="signature">
-                        Yours,<br>
-                        [Your Name]
+                <div class="letter-content-wrapper">
+                    <div class="letter-content">
+                        <h2>Dearest Maple,</h2>
+                        <p>
+                            The world is quiet tonight, and in this silence, my thoughts travel to you.
+                        </p>
+                        <p>
+                            Christmas is often about the noise, the lights, and the rush. But for me, it is a moment to pause and appreciate the rare and beautiful things in my life. You are, without a doubt, at the top of that list.
+                        </p>
+                        <p>
+                            Thank you for your warmth, your spirit, and for simply being who you are. May this season bring you the peace you deserve.
+                        </p>
+                        <div class="signature">
+                            Yours,<br>
+                            [Your Name]
+                        </div>
                     </div>
                 </div>
             </div>
@@ -396,16 +404,16 @@
     <script>
         function createSnow() {
             const container = document.body;
-            for (let i = 0; i < 60; i++) {
+            for (let i = 0; i < 70; i++) {
                 const flake = document.createElement('div');
                 flake.classList.add('snowflake');
                 const size = Math.random() * 3 + 1 + 'px';
                 flake.style.width = size;
                 flake.style.height = size;
                 flake.style.left = Math.random() * 100 + 'vw';
-                flake.style.animationDuration = Math.random() * 5 + 3 + 's';
-                flake.style.opacity = Math.random() * 0.5 + 0.3;
-                // Add blur for depth
+                // Slower snow for a more cinematic feel
+                flake.style.animationDuration = Math.random() * 8 + 5 + 's';
+                flake.style.opacity = Math.random() * 0.6 + 0.2;
                 if(Math.random() > 0.5) flake.style.filter = "blur(1px)";
                 container.appendChild(flake);
             }
