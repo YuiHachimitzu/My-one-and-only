@@ -1,460 +1,220 @@
-<style>
-    /* --- General Styles --- */
-    :root {
-        --bg-color: #fff0f5; /* Lavender Blush background */
-        --primary-pink: #ff69b4; /* Hot pink for envelope */
-        --soft-pink: #ffb6c1; /* Light pink */
-        --accent-red: #d32f2f;
-        --text-dark: #333;
-        --paper-white: #fffdf9;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Yui</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Styles --- */
+        :root {
+            --bg-color: #fff0f5; 
+            --primary-pink: #ff69b4; 
+            --soft-pink: #ffb6c1; 
+            --accent-red: #d32f2f;
+            --text-dark: #333;
+            --paper-white: #fffdf9;
+        }
 
-    * { box-sizing: border-box; }
+        * { box-sizing: border-box; }
 
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        /* Soft pink gradient background */
-        background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Montserrat', sans-serif;
-        overflow: hidden;
-        position: relative; /* For snow container */
-    }
+        body {
+            margin: 0; padding: 0; height: 100vh;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden; position: relative;
+        }
 
-    /* Falling Snow */
-    .snow-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        overflow: hidden;
-        z-index: 0;
-    }
+        /* Falling Snow Container */
+        .snow-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; overflow: hidden; z-index: 1;
+        }
 
-    .snowflake {
-        position: absolute;
-        color: #fff;
-        font-size: 1.5em;
-        animation: fall 10s linear infinite;
-        opacity: 0.8;
-    }
+        .snowflake {
+            position: absolute; color: #fff; font-size: 1.5em;
+            animation: fall 10s linear infinite; opacity: 0.8;
+        }
 
-    @keyframes fall {
-        0% { transform: translateY(-100%); }
-        100% { transform: translateY(100vh); }
-    }
+        @keyframes fall {
+            0% { transform: translateY(-10vh); }
+            100% { transform: translateY(110vh); }
+        }
 
-    /* Container for different stages to manage transitions */
-    .stage-container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 1s ease-in-out, visibility 1s;
-        opacity: 0;
-        visibility: hidden;
-        padding: 20px;
-        z-index: 1; /* Above snow */
-    }
+        .stage-container {
+            position: absolute; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1s ease-in-out;
+            opacity: 0; visibility: hidden; padding: 20px; z-index: 10;
+        }
 
-    /* Active stage is visible */
-    .stage-container.active {
-        opacity: 1;
-        visibility: visible;
-        z-index: 10;
-    }
+        .stage-container.active { opacity: 1; visibility: visible; }
 
-    /* --- STAGE 1: INTRO --- */
-    #stage-1 { text-align: center; }
+        /* --- STAGE 1 --- */
+        .merry-christmas-text {
+            font-family: 'Great Vibes', cursive; font-size: 4rem;
+            color: var(--accent-red); margin-bottom: 50px;
+        }
+        .loading-text { font-size: 1.2rem; color: #666; font-weight: 600; }
+        .dots::after { content: '.'; animation: dots 1.5s steps(5, end) infinite; }
+        @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60% { content: '...'; } 80%, 100% { content: ''; } }
 
-    .merry-christmas-text {
-        font-family: 'Great Vibes', cursive;
-        font-size: 4rem;
-        color: var(--accent-red);
-        margin-bottom: 50px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    }
+        /* --- STAGE 2 --- */
+        .top-text { font-size: 1.1rem; margin-bottom: 5px; text-align: center; }
+        .hey-yui { font-size: 1.5rem; font-weight: 600; margin-bottom: 30px; color: var(--primary-pink); }
+        .white-paper-square {
+            background: var(--paper-white); width: 85%; max-width: 400px; padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-radius: 8px; text-align: center;
+            font-family: 'Patrick Hand', cursive; font-size: 1.3rem; margin-bottom: 40px;
+        }
+        .bottom-red-text { color: var(--accent-red); font-weight: bold; margin-bottom: 15px; }
+        .next-button {
+            background: var(--accent-red); color: white; border: none; padding: 12px 40px;
+            font-size: 1rem; border-radius: 50px; cursor: pointer;
+        }
 
-    .loading-text {
-        font-size: 1.2rem;
-        color: #666;
-        font-weight: 600;
-    }
+        /* --- STAGE 3 --- */
+        .envelope-container { width: 320px; height: 220px; position: relative; perspective: 1000px; cursor: pointer; }
+        .envelope-body {
+            position: absolute; bottom: 0; width: 100%; height: 100%;
+            background: var(--primary-pink); border-radius: 6px; z-index: 1;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+        }
+        .final-letter {
+            position: absolute; bottom: 10px; left: 5%; width: 90%; height: 90%;
+            background: var(--paper-white); z-index: 2; border-radius: 4px; padding: 20px;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px dashed var(--soft-pink); text-align: center;
+        }
+        
+        .is-open .final-letter { transform: translateY(-160px); height: 420px; z-index: 5; }
 
-    /* Loading dots animation */
-    .dots::after {
-        content: '.';
-        animation: dots 1.5s steps(5, end) infinite;
-    }
-    @keyframes dots {
-        0%, 20% { content: '.'; }
-        40% { content: '..'; }
-        60% { content: '...'; }
-        80%, 100% { content: ''; }
-    }
+        .envelope-pocket {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            z-index: 3; overflow: hidden; pointer-events: none;
+        }
+        .envelope-pocket::before {
+            content: ""; position: absolute; bottom: 0; left: 0;
+            border-style: solid; border-width: 130px 0 90px 320px; border-color: transparent transparent transparent #ff85c2;
+        }
+        .envelope-pocket::after {
+            content: ""; position: absolute; bottom: 0; right: 0;
+            border-style: solid; border-width: 0 0 220px 320px; border-color: transparent transparent var(--primary-pink) transparent;
+        }
 
+        .envelope-flap {
+            position: absolute; top: 0; left: 0; width: 100%; height: 0;
+            border-style: solid; border-width: 120px 160px 0 160px;
+            border-color: #ff5aa7 transparent transparent transparent;
+            z-index: 4; transform-origin: top; transition: transform 0.6s ease;
+        }
+        .is-open .envelope-flap { transform: rotateX(180deg); z-index: 1; }
 
-    /* --- STAGE 2: THE BRIDGE NOTE --- */
-    #stage-2 {
-        justify-content: center;
-        color: var(--text-dark);
-    }
+        .heart-seal {
+            position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%);
+            font-size: 40px; z-index: 10; animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat { 50% { transform: translateX(-50%) scale(1.15); } }
 
-    .top-text {
-        font-size: 1.1rem;
-        margin-bottom: 5px;
-        text-align: center;
-    }
+        .letter-content { opacity: 0; transition: opacity 0.5s 1.2s; }
+        .is-open .letter-content { opacity: 1; overflow-y: auto; height: 100%; }
 
-    .hey-yui {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 30px;
-        text-align: center;
-        color: var(--primary-pink);
-    }
+        .poem-title { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: var(--primary-pink); margin-top: 25px;}
+        .poem-body { font-family: 'Patrick Hand', cursive; font-size: 1.15rem; line-height: 1.5; color: #555; white-space: pre-wrap; margin: 15px 0;}
+        .signature { font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--primary-pink); text-align: right; }
+        
+        /* Decorations */
+        .decor { font-size: 1.2rem; color: var(--primary-pink); opacity: 0.6; margin: 5px 0; }
+    </style>
+</head>
+<body>
 
-    .white-paper-square {
-        background-color: var(--paper-white);
-        width: 80%;
-        max-width: 400px;
-        padding: 30px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        border-radius: 8px;
-        text-align: center;
-        font-family: 'Patrick Hand', cursive; /* Handwritten feel */
-        font-size: 1.3rem;
-        color: #555;
-        margin-bottom: 40px;
-        border: 1px solid #eee;
-         /* Subtle paper texture */
-        background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23000000' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E");
-    }
+<div class="snow-container"></div>
 
-    .bottom-red-text {
-        color: var(--accent-red);
-        font-weight: bold;
-        margin-bottom: 15px;
-        font-size: 1.1rem;
-    }
-
-    .next-button {
-        background-color: var(--accent-red);
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        font-size: 1rem;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: transform 0.2s, background-color 0.2s;
-        font-family: 'Montserrat', sans-serif;
-        box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
-    }
-
-    .next-button:hover {
-        background-color: #b71c1c;
-        transform: scale(1.05);
-    }
-
-
-    /* --- STAGE 3: THE PINK ENVELOPE --- */
-    #stage-3 { perspective: 1500px; }
-
-    .envelope-container {
-        width: 320px;
-        height: 220px;
-        position: relative;
-        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        transform-style: preserve-3d;
-        cursor: pointer;
-    }
-
-    .envelope-container:hover {
-        transform: translateY(-5px) scale(1.02);
-    }
-
-    .envelope-body {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--primary-pink);
-        border-radius: 6px;
-        box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
-        z-index: 1;
-    }
-
-    /* The Final Letter */
-    .final-letter {
-        position: absolute;
-        bottom: 5px;
-        left: 5%;
-        width: 90%;
-        height: 95%;
-        background: var(--paper-white);
-        z-index: 2;
-        transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), height 1.2s ease;
-        border-radius: 4px;
-        padding: 30px;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-         /* Subtle paper texture */
-         background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23000000' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E");
-         transform: translateY(50px); /* Make the paper even lower inside the envelope */
-         border: 2px dashed var(--soft-pink); /* Cute moe-style dashed border */
-    }
-
-    /* Add moe decorations */
-    .final-letter::before {
-        content: "🌸 💕 🌸 ⭐ 🌸";
-        position: absolute;
-        top: 10px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        font-size: 1.5rem;
-        color: var(--primary-pink);
-        opacity: 0.8;
-    }
-
-    .final-letter::after {
-        content: "🐱 ❤️ 🐱 💖 🐱";
-        position: absolute;
-        bottom: 10px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        font-size: 1.5rem;
-        color: var(--primary-pink);
-        opacity: 0.8;
-    }
-
-    /* The Pocket covering the letter */
-    .envelope-pocket {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 3;
-        overflow: hidden;
-        border-radius: 6px;
-        pointer-events: none;
-    }
-    
-    .envelope-pocket::before { /* Left triangle */
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 130px 0 90px 320px;
-        border-color: transparent transparent transparent #ff85c2; /* Slightly lighter pink */
-    }
-    
-    .envelope-pocket::after { /* Right triangle */
-        content: "";
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 0 220px 320px;
-        border-color: transparent transparent var(--primary-pink) transparent;
-    }
-
-    /* Top Flap */
-    .envelope-flap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 0;
-        border-style: solid;
-        border-width: 120px 160px 0 160px; /* Adjusted for new width */
-        border-color: #ff5aa7 transparent transparent transparent; /* Slightly darker pink flap */
-        z-index: 4;
-        transform-origin: top;
-        transition: transform 0.8s ease-in-out, z-index 0.8s;
-    }
-
-    /* Heart Seal */
-    .heart-seal {
-        position: absolute;
-        bottom: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 40px;
-        z-index: 10;
-        filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
-        animation: heartbeat 1.5s infinite;
-    }
-
-    @keyframes heartbeat {
-        0%, 100% { transform: translateX(-50%) scale(1); }
-        50% { transform: translateX(-50%) scale(1.15); }
-    }
-
-
-    /* --- OPEN ANIMATION STATES --- */
-    .is-open .envelope-flap {
-        transform: rotateX(180deg);
-        z-index: 1;
-    }
-
-    .is-open .heart-seal {
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .is-open .final-letter {
-        transform: translateY(-200px); /* Adjusted to compensate for lower starting position */
-        height: 400px; /* Expands */
-        z-index: 5;
-        transition-delay: 0.5s;
-        overflow-y: auto;
-    }
-
-    /* --- LETTER CONTENT --- */
-    .letter-content {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 1s ease 1.5s, transform 1s ease 1.5s;
-        text-align: center;
-        position: relative; /* For positioning relative to decorations */
-        z-index: 6; /* Above decorations */
-    }
-    
-    .is-open .letter-content {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .poem-title {
-        font-family: 'Great Vibes', cursive;
-        font-size: 2rem;
-        color: var(--primary-pink);
-        margin-bottom: 20px;
-    }
-
-    .poem-body {
-        font-family: 'Patrick Hand', cursive;
-        font-size: 1.3rem;
-        line-height: 1.6;
-        color: #555;
-        margin-bottom: 30px;
-        white-space: pre-wrap; /* Preserve line breaks in text */
-    }
-
-    .signature {
-        text-align: right;
-        font-family: 'Great Vibes', cursive;
-        font-size: 1.8rem;
-        color: var(--primary-pink);
-        padding-right: 20px;
-    }
-
-</style>
 <div class="stage-container active" id="stage-1">
     <div class="merry-christmas-text">Merry Christmas</div>
     <div class="loading-text">loading koi's love<span class="dots"></span></div>
 </div>
 
-
 <div class="stage-container" id="stage-2">
     <div class="top-text">I wanted to give you this personally but ~</div>
     <div class="hey-yui">Hey yui 😊</div>
-
     <div class="white-paper-square">
         "My dearest Yui, words often fail when feelings are this strong. This season, I wanted to capture just a small fragment of my love for you in a special note..."
     </div>
-
     <div class="bottom-red-text">tap the button, okay?!</div>
     <button class="next-button" onclick="goToStage3()">Okay!</button>
 </div>
 
-
 <div class="stage-container" id="stage-3">
     <div class="envelope-container" id="envelope" onclick="openLetter()">
         <div class="envelope-body"></div>
-        
         <div class="final-letter">
             <div class="letter-content">
+                <div class="decor">🌸 💕 🌸 ⭐ 🌸</div>
                 <div class="poem-title">My Christmas Wish</div>
-                <div class="poem-body">The snow may fall, the lights may shine,But the brightest star is that you're mine. Even though we are apart tonight, Thinking of you makes everything bright.
-You are my joy, my holiday cheer, The best part of my entire year. Merry Christmas, my lovely Yui.  Love always, Koi   
-                    <div class="envelope-pocket"></div>
-        
+                <div class="poem-body">The snow may fall, 
+the lights may shine,
+But the brightest star 
+is that you're mine. 
+
+Even though we are 
+apart tonight, 
+Thinking of you makes 
+everything bright.
+
+You are my joy, 
+my holiday cheer, 
+The best part of 
+my entire year. 
+
+Merry Christmas, 
+my lovely Yui.</div>
+                <div class="signature">Love always, Koi</div>
+                <div class="decor">🐱 ❤️ 🐱 💖 🐱</div>
+            </div>
+        </div>
+        <div class="envelope-pocket"></div>
         <div class="envelope-flap">
             <div class="heart-seal">💖</div>
         </div>
     </div>
 </div>
 
-
 <script>
-    // --- State Management ---
     function showStage(stageId) {
-        // Hide all stages
-        document.querySelectorAll('.stage-container').forEach(stage => {
-            stage.classList.remove('active');
-        });
-        // Show targeted stage
+        document.querySelectorAll('.stage-container').forEach(s => s.classList.remove('active'));
         document.getElementById(stageId).classList.add('active');
     }
 
-    // --- Timeline ---
+    setTimeout(() => showStage('stage-2'), 4000);
 
-    // 1. Start Stage 1, wait 4 seconds, transition to Stage 2
-    setTimeout(() => {
-        showStage('stage-2');
-    }, 4000); // 4 seconds for intro loading
+    function goToStage3() { showStage('stage-3'); }
 
-    // 2. Button click transitions to Stage 3
-    function goToStage3() {
-        showStage('stage-3');
-    }
-
-    // 3. Envelope click opens the letter
     function openLetter() {
-        const envelope = document.getElementById('envelope');
-        if (!envelope.classList.contains('is-open')) {
-            envelope.classList.add('is-open');
-        }
+        document.getElementById('envelope').classList.add('is-open');
     }
 
-    // Create falling snowflakes
     function createSnowflakes() {
         const container = document.querySelector('.snow-container');
-        const emojis = ['❄️', '💕']; // Mix snowflakes and hearts for moe touch
-        for (let i = 0; i < 50; i++) {
+        const emojis = ['❄️', '💕'];
+        for (let i = 0; i < 40; i++) {
             const snowflake = document.createElement('div');
             snowflake.classList.add('snowflake');
             snowflake.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            snowflake.style.left = `${Math.random() * 100}%`;
-            snowflake.style.animationDuration = `${Math.random() * 10 + 10}s`; // Slower fall
-            snowflake.style.animationDelay = `${Math.random() * 5}s`;
-            snowflake.style.fontSize = `${Math.random() * 1 + 1}em`;
-            snowflake.style.color = snowflake.textContent === '💕' ? 'var(--soft-pink)' : '#fff';
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.opacity = Math.random();
             container.appendChild(snowflake);
         }
     }
-
-    // Call on load
-    window.addEventListener('load', createSnowflakes);
+    createSnowflakes();
 </script>
+
+</body>
+</html>
+
